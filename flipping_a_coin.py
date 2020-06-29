@@ -135,7 +135,7 @@ class SceneTwo(Scene):
                 self.play(FadeOut(outcome[0]), FadeOut(mill_text_4))
 
 
-class SceneThree(Scene):
+class SceneTrials(Scene):
     CONFIG = GLOBAL_CONFIG
 
     def construct(self):
@@ -162,7 +162,7 @@ class SceneThree(Scene):
         # self.play(FadeOut(line_1), FadeOut(line_2), FadeOut(line_3))
 
 
-class SceneTrials(Scene):
+class SceneThree(Scene):
     CONFIG = GLOBAL_CONFIG
 
     def construct(self):
