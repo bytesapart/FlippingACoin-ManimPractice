@@ -22,10 +22,11 @@ class SceneOne(Scene):
         line_3.shift(DOWN)
 
         # Write to the final render
+        self.wait(6)
         self.play(Write(line_1))
         self.play(Write(line_2))
         self.play(Write(line_3))
-        self.wait(1)
+        self.wait(8)
         self.play(FadeOut(line_1), FadeOut(line_2), FadeOut(line_3))
 
 
@@ -46,7 +47,7 @@ class SceneTwo(Scene):
 
         # Initialise randomly outcomes
         outcomes = init_coin_faces(['H', 'T'])
-
+        self.wait(7)
         # Loop through random sequence
         for i, outcome in enumerate(outcomes):
             try:
@@ -63,12 +64,12 @@ class SceneTwo(Scene):
                 self.play(Transform(outcome[0], outcomes[i + 1][0]))
             except IndexError:
                 self.wait(2)
-                self.play(outcome[0].shift, [-4, 0, 0])
+                self.play(outcome[0].shift, [-4, 0, 0], run_time=0.5)
                 final_coin = outcome
                 # self.play(FadeOut(outcome[0]))
 
         # ===== Scene 3 =====
-        outcomes = init_coin_faces(random.choices(['H', 'T'], k=1), [-4, 0, 0])
+        outcomes = init_coin_faces(random.choices(['H', 'T'], k=3), [-4, 0, 0])
         outcomes.insert(0, final_coin)
 
         # Object initialisation
@@ -76,22 +77,22 @@ class SceneTwo(Scene):
         mill_text = Text("Six Million", stroke_width=0).shift([4, 0, 0])
         mill_text_3 = TextMobject('X', stroke_width=2, size=2).shift([3.5, 0, 0])
         mill_text_4 = TextMobject('X Times', stroke_width=0, size=2).shift(1.5 * UP)
-        mill_text_5 = Text('Randomness', stroke_width=0).shift(1.5 * UP)
+        mill_text_5 = Text('Randomness?', stroke_width=0).shift(1.5 * UP)
 
-        self.play(ShowCreation(arrow_p))
+        self.play(ShowCreation(arrow_p), run_time=0.5)
         self.play(ShowCreation(mill_text))
 
         for i, outcome in enumerate(outcomes):
             try:
                 # ==== ALL BREAKING SHENANEGANS =====
-                if i == 1:  # Make Arrow
+                if i == 3:  # Make Arrow
                     self.play(Transform(mill_text, mill_text_3))
                 # ===== END BREAKING SHENANEGANS =====
                 outcome[0].add(outcome[1])
                 if i == 0:
                     pass
                 else:
-                    if i == 1:
+                    if i == 3:
                         self.play(ShowCreation(outcome[0]), Transform(mill_text, mill_text_3))
                     else:
                         self.play(ShowCreation(outcome[0]))
@@ -108,11 +109,11 @@ class SceneTwo(Scene):
                 # self.wait(2)
                 self.remove(mill_text_3)
                 self.play(FadeOut(arrow_p), ReplacementTransform(mill_text, mill_text_4), outcome[0].shift, [4, 0, 0])
-                self.wait(2)
+                self.wait(7)
                 self.play(Transform(mill_text_4, mill_text_5))
                 final_coin = outcome
 
-        outcomes = init_coin_faces(random.choices(['H', 'T'], k=2))
+        outcomes = init_coin_faces(random.choices(['H', 'T'], k=5))
         outcomes.insert(0, final_coin)
 
         for i, outcome in enumerate(outcomes):
@@ -133,6 +134,7 @@ class SceneTwo(Scene):
                 self.play(Transform(outcome[0], outcomes[i + 1][0]))
             except IndexError:
                 self.play(FadeOut(outcome[0]), FadeOut(mill_text_4))
+                self.wait(7)
 
 
 class SceneTrials(Scene):
@@ -181,9 +183,16 @@ class SceneThree(Scene):
             width=0).set_fill("#264b33", opacity=0.5).shift([0, 0.83, 0])
 
         self.play(FadeIn(coin_flip))
-        self.play(ShowCreation(debug_highlight))
-        self.play(debug_highlight.shift, [0, -0.43, 0])
-        self.play(debug_highlight.shift, [0, -0.43, 0])
-        self.play(debug_highlight.shift, [0, -0.43, 0])
-        self.play(debug_highlight.shift, [0, -0.43, 0])
-        self.play(debug_highlight.shift, [0, -0.43, 0])
+        self.play(ShowCreation(debug_highlight))  # import random
+        self.wait(3)
+        self.play(debug_highlight.shift, [0, -0.43, 0])  # outcomes
+        self.wait(4)
+        self.play(debug_highlight.shift, [0, -0.43, 0])  # for...
+        self.wait(8)
+        self.play(debug_highlight.shift, [0, -0.43, 0])  # choices
+        self.wait(13)
+        self.play(debug_highlight.shift, [0, -0.43, 0])  # print 1
+        self.wait(1)
+        self.play(debug_highlight.shift, [0, -0.43, 0])  # print 2
+        self.wait(26)
+        self.play(FadeOut(coin_flip), FadeOut(debug_highlight))
